@@ -8,7 +8,10 @@ pipeline {
   stages {
     stage('Checkout') {
       steps {
-        git 'https://github.com/rlmuthukumargit/nodejs-mysqlapp'
+         git branch: 'master',
+                    credentialsId: 'nodeapp',
+                    url: 'https://github.com/rlmuthukumargit/nodejs-mysqlapp'
+        #git 'https://github.com/rlmuthukumargit/nodejs-mysqlapp'
       }
     }
 
