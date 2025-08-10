@@ -11,9 +11,8 @@ pipeline {
          git branch: 'master',
                     credentialsId: 'nodeapp',
                     url: 'https://github.com/rlmuthukumargit/nodejs-mysqlapp'
-        #git 'https://github.com/rlmuthukumargit/nodejs-mysqlapp'
+          }
       }
-    }
 
     stage('Install Dependencies') {
       steps {
