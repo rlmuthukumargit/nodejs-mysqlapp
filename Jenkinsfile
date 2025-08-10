@@ -8,7 +8,7 @@ pipeline {
   stages {
     stage('Checkout') {
       steps {
-        git 'https://github.com/your-repo/nodejs-mysql-ci-cd.git'
+        git 'https://github.com/rlmuthukumargit/nodejs-mysqlapp'
       }
     }
 
