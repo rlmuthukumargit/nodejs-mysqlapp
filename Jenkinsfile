@@ -2,7 +2,7 @@ pipeline {
   agent any
   environment {
     IMAGE_NAME = "nodejs-mysql-ci-cd"
-    DOCKER_REGISTRY = "your-dockerhub-username"
+    DOCKER_REGISTRY = "rlmuthukumar/nodejsdemoapp"
   }
 
   stages {
