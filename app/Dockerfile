@@ -1,4 +1,4 @@
-FROM node:20
+FROM node:22-slim
 ##Install NPM 
 RUN apt-get update && apt-get install -y npm && rm -rf /var/lib/apt/lists/*
 WORKDIR /app
