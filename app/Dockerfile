@@ -1,14 +1,23 @@
+# Use official Node.js 22 slim image
 FROM node:22-slim
-##Install NPM 
-RUN apt-get update && apt-get install -y npm && rm -rf /var/lib/apt/lists/*
-WORKDIR /app
-#Test12
 
+# Set working directory
+WORKDIR /app
+
+# Install npm (and optional build tools if needed)
+RUN apt-get update && apt-get install -y npm && rm -rf /var/lib/apt/lists/*
+
+# Copy package files first for better caching
 COPY package*.json ./
+
+# Install dependencies
 RUN npm install
 
+# Copy the rest of the source code
 COPY . .
 
+# Expose application port
 EXPOSE 3000
-CMD ["npm", "start"]
 
+# Start application
+CMD ["npm", "start"]
