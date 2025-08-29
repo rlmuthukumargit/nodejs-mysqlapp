@@ -2,17 +2,34 @@ pipeline {
   agent any
 
   environment {
+<<<<<<< HEAD
     IMAGE_NAME = 'your-dockerhub-username/your-app'
     DOCKER_CREDENTIALS_ID = 'docker-hub-creds' // Jenkins credentials ID
     DEPLOY_SERVER = '192.168.222.128'
     DEPLOY_USER = 'your-user'
     DEPLOY_DIR = '/data/app' // where docker-compose.yml is stored
+=======
+    IMAGE_NAME = "nodejs-mysql-ci-cd"
+    DOCKER_REGISTRY = "rlmuthukumar/nodejsdemoapp"
+>>>>>>> b457c5d76a722910d9a79dac4f31638261abda2c
   }
 
   stages {
     stage('Checkout') {
       steps {
+<<<<<<< HEAD
         checkout scm
+=======
+        git branch : 'master',
+            credentialsId: 'github-credentials',
+            url: 'https://github.com/rlmuthukumargit/nodejs-mysqlapp.git'
+            }
+      }
+
+    stage('Install Dependencies') {
+      steps {
+        sh 'npm install'
+>>>>>>> b457c5d76a722910d9a79dac4f31638261abda2c
       }
     }
 
@@ -51,4 +68,10 @@ pipeline {
       }
     }
   }
+<<<<<<< HEAD
 }
+=======
+}
+
+
+>>>>>>> b457c5d76a722910d9a79dac4f31638261abda2c
