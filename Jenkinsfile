@@ -1,52 +1,54 @@
 pipeline {
   agent any
+
   environment {
-    IMAGE_NAME = "nodejs-mysql-ci-cd"
-    DOCKER_REGISTRY = "your-dockerhub-username"
+    IMAGE_NAME = 'your-dockerhub-username/your-app'
+    DOCKER_CREDENTIALS_ID = 'docker-hub-creds' // Jenkins credentials ID
+    DEPLOY_SERVER = '192.168.222.128'
+    DEPLOY_USER = 'your-user'
+    DEPLOY_DIR = '/data/app' // where docker-compose.yml is stored
   }
 
   stages {
     stage('Checkout') {
       steps {
-        git 'https://github.com/your-repo/nodejs-mysql-ci-cd.git'
-      }
-    }
-
-    stage('Install Dependencies') {
-      steps {
-        sh 'npm install'
+        checkout scm
       }
     }
 
     stage('Build Docker Image') {
       steps {
-        sh "docker build -t $DOCKER_REGISTRY/$IMAGE_NAME:${BUILD_NUMBER} ."
-      }
-    }
-
-    stage('Push Docker Image') {
-      steps {
-        withCredentials([usernamePassword(credentialsId: 'docker-hub-creds', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
-          sh 'echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin'
-          sh "docker push $DOCKER_REGISTRY/$IMAGE_NAME:${BUILD_NUMBER}"
+        script {
+          sh 'docker build -t $IMAGE_NAME:$BUILD_NUMBER .'
+          sh 'docker tag $IMAGE_NAME:$BUILD_NUMBER $IMAGE_NAME:latest'
         }
       }
     }
 
-    stage('Approval by Manager') {
+    stage('Push to Docker Hub') {
       steps {
-        timeout(time: 1, unit: 'HOURS') {
-          input message: 'Approve deployment?', ok: 'Approve'
+        withCredentials([usernamePassword(credentialsId: "$DOCKER_CREDENTIALS_ID", usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+          sh '''
+            echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
+            docker push $IMAGE_NAME:$BUILD_NUMBER
+            docker push $IMAGE_NAME:latest
+          '''
         }
       }
     }
 
-    stage('Deploy') {
+    stage('Deploy with Docker Compose') {
       steps {
-        echo "Deploying image $DOCKER_REGISTRY/$IMAGE_NAME:${BUILD_NUMBER}"
-        sh "docker compose up -d"
+        sshagent(credentials: ['ssh-key-id']) {
+          sh """
+            ssh -o StrictHostKeyChecking=no $DEPLOY_USER@$DEPLOY_SERVER '
+              cd $DEPLOY_DIR &&
+              docker-compose pull &&
+              docker-compose up -d
+            '
+          """
+        }
       }
     }
   }
 }
-
