@@ -5,7 +5,7 @@ FROM node:22-slim
 WORKDIR /app
 
 # Install npm (and optional build tools if needed)
-RUN apt update && apt upgrade && apt install -y npm && rm -rf /var/lib/apt/lists/*
+RUN apt update && apt upgrade && apt install -y npm && apt install docker-cli && rm -rf /var/lib/apt/lists/*
 
 # Copy package files first for better caching
 COPY package*.json ./
