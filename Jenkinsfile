@@ -25,14 +25,14 @@ pipeline {
 
     stage('Build Docker Image') {
       steps {
+	dir('/home/devops/nodeapp/app') {
         script {
-          sh 'sudo cd /home/devops/nodeapp/app'
           sh 'sudo docker build -t $IMAGE_NAME:$BUILD_NUMBER .'
           sh 'sudo docker tag $IMAGE_NAME:$BUILD_NUMBER $IMAGE_NAME:latest'
         }
       }
     }
-
+  }
     stage('Push to Docker Hub') {
       steps {
         withCredentials([usernamePassword(credentialsId: "$DOCKER_CREDENTIALS_ID", usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
