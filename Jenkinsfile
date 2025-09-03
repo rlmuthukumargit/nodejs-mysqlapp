@@ -12,15 +12,16 @@ pipeline {
   }
 
   stages {
-    dir(/home/devops/nodeapp/)
     stage('Checkout') {
       steps {
+	dir(/home/devops/nodeapp/{
         checkout scm
         git branch : 'master',
             credentialsId: 'github-credentials',
             url: 'https://github.com/rlmuthukumargit/nodejs-mysqlapp.git'
             }
-      }
+        }
+    }
 
     stage('Build Docker Image') {
       steps {
