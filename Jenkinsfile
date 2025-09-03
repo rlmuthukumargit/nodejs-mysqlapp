@@ -24,8 +24,8 @@ pipeline {
     stage('Build Docker Image') {
       steps {
         script {
-          sh 'docker build -t $IMAGE_NAME:$BUILD_NUMBER .'
-          sh 'docker tag $IMAGE_NAME:$BUILD_NUMBER $IMAGE_NAME:latest'
+          sh 'sudo docker build -t $IMAGE_NAME:$BUILD_NUMBER .'
+          sh 'sudo docker tag $IMAGE_NAME:$BUILD_NUMBER $IMAGE_NAME:latest'
         }
       }
     }
