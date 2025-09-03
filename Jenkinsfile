@@ -26,6 +26,7 @@ pipeline {
     stage('Build Docker Image') {
       steps {
         script {
+          sh 'sudo cd /home/devops/nodeapp/app'
           sh 'sudo docker build -t $IMAGE_NAME:$BUILD_NUMBER .'
           sh 'sudo docker tag $IMAGE_NAME:$BUILD_NUMBER $IMAGE_NAME:latest'
         }
