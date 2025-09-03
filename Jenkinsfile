@@ -14,7 +14,7 @@ pipeline {
   stages {
     stage('Checkout') {
       steps {
-	dir(/home/devops/nodeapp/{
+	dir('/home/devops/nodeapp'{
         checkout scm
         git branch : 'master',
             credentialsId: 'github-credentials',
