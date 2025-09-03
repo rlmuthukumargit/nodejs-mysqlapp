@@ -1,5 +1,10 @@
 pipeline {
-  agent any
+  agent {
+    	node {
+    	label  "master"
+    	}
+      }
+
 
   environment {
     IMAGE_NAME = "nodejs-mysql-ci-cd"
