@@ -12,6 +12,7 @@ pipeline {
   }
 
   stages {
+    dir(/home/devops/nodeapp/)
     stage('Checkout') {
       steps {
         checkout scm
