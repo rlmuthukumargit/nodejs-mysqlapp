@@ -1,5 +1,5 @@
 pipeline {
-  agent any
+  agent devops
 
   environment {
     IMAGE_NAME = "nodejs-mysql-ci-cd"
