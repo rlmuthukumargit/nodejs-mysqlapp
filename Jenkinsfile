@@ -28,7 +28,7 @@ pipeline {
 	dir('/home/devops/nodeapp/app') {
         script {
           sh 'sudo docker build -t $IMAGE_NAME:$BUILD_NUMBER .'
-          sh 'sudo docker tag rlmuthukumar/$IMAGE_NAME:$BUILD_NUMBER $IMAGE_NAME:latest'
+          sh 'sudo docker tag $IMAGE_NAME:$BUILD_NUMBER rlmuthukumar/$IMAGE_NAME:latest'
         }
       }
     }
@@ -39,7 +39,7 @@ pipeline {
           sh '''
             echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
             sudo docker push rlmuthukumar/$IMAGE_NAME:$BUILD_NUMBER
-            //sudo docker push $IMAGE_NAME:latest
+            sudo docker push rlmuthukumar/$IMAGE_NAME:latest
           '''
         }
       }
