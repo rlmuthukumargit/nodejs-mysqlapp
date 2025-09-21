@@ -27,8 +27,8 @@ pipeline {
       steps {
 	dir('/home/devops/nodeapp/app') {
         script {
-          sh 'sudo docker build -t rlmuthukumar/$IMAGE_NAME:$BUILD_NUMBER .'
-          sh 'sudo docker tag rlmuthukumar$IMAGE_NAME:$BUILD_NUMBER $IMAGE_NAME:latest'
+          sh 'sudo docker build -t $IMAGE_NAME:$BUILD_NUMBER .'
+          sh 'sudo docker tag rlmuthukumar/$IMAGE_NAME:$BUILD_NUMBER $IMAGE_NAME:latest'
         }
       }
     }
@@ -38,7 +38,7 @@ pipeline {
         withCredentials([usernamePassword(credentialsId: "docker-hub-creds", usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
           sh '''
             echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
-            sudo docker push $IMAGE_NAME:$BUILD_NUMBER
+            sudo docker push rlmuthukumar/$IMAGE_NAME:$BUILD_NUMBER
             //sudo docker push $IMAGE_NAME:latest
           '''
         }
