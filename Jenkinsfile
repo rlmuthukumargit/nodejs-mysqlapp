@@ -7,7 +7,7 @@ pipeline {
 
 
   environment {
-    IMAGE_NAME = "nodejs-mysql-ci-cd"
+    IMAGE_NAME = "rlmuthukumar/nodejs-mysql-ci-cd"
     DOCKER_REGISTRY = "rlmuthukumar/nodejsdemoapp"
   }
 
@@ -39,7 +39,7 @@ pipeline {
           sh '''
             echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
             sudo docker push $IMAGE_NAME:$BUILD_NUMBER
-            sudo docker push $IMAGE_NAME:latest
+            //sudo docker push $IMAGE_NAME:latest
           '''
         }
       }
