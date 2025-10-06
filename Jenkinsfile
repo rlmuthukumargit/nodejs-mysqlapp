@@ -44,15 +44,12 @@ pipeline {
    }
 
     stage('Deploy with Docker Compose') {
-      steps {
-        sshagent(credentials: ['ssh-key-id']) {
-          sh """
-            ssh -o StrictHostKeyChecking=no $DEPLOY_USER@$DEPLOY_SERVER '
-              cd $DEPLOY_DIR &&
-              docker-compose pull &&
-              docker-compose up -d
-            '
-          """
+            steps {
+                script {
+                    sh """
+                        cd /home/devops/nodeapp/   # path where docker-compose.yml exists
+                        sudo docker compose up -d --force-recreate
+                    """
         }
       }
     }
