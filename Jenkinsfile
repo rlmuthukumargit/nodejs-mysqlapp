@@ -8,7 +8,7 @@ pipeline {
 
   environment {
     IMAGE_NAME = "nodejs-mysql-ci-cd"
-    DOCKER_REGISTRY = "rlmuthukumar/nodejsdemoapp"
+    DOCKER_REGISTRY = "rlmuthukumar/nodejs-mysql-ci-cd"
   }
 
   stages {
@@ -28,7 +28,7 @@ pipeline {
 	dir('/home/devops/nodeapp/app') {
         script {
           sh 'sudo docker build -t $IMAGE_NAME:$BUILD_NUMBER .'
-          sh 'sudo docker tag $IMAGE_NAME:$BUILD_NUMBER rlmuthukumar/$IMAGE_NAME:latest'
+          sh 'sudo docker tag $IMAGE_NAME:$BUILD_NUMBER rlmuthukumar/$IMAGE_NAME:$BUILD_NUMBER'
         }
       }
     }
