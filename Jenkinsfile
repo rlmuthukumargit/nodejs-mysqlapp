@@ -48,7 +48,7 @@ pipeline {
     steps {
         sh """
             cd /home/devops/nodeapp/
-            sed -i 's|rlmuthukumar/nodejs-mysql-ci-cd:.*|rlmuthukumar/nodejs-mysql-ci-cd:${IMAGE_TAG}|' docker-compose.yml
+            sudo sed -i 's|rlmuthukumar/nodejs-mysql-ci-cd:.*|rlmuthukumar/nodejs-mysql-ci-cd:${IMAGE_TAG}|' docker-compose.yaml
         """
           }
       }
