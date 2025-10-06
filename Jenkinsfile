@@ -8,6 +8,7 @@ pipeline {
   environment {
     IMAGE_NAME = "nodejs-mysql-ci-cd"
     DOCKER_REGISTRY = "rlmuthukumar/nodejs-mysql-ci-cd"
+    IMAGE_TAG = "BUILD_NUMBER"
   }
 
   stages {
@@ -26,8 +27,8 @@ pipeline {
       steps {
 	dir('/home/devops/nodeapp/app') {
         script {
-          sh 'sudo docker build -t $IMAGE_NAME:$BUILD_NUMBER .'
-          sh 'sudo docker tag $IMAGE_NAME:$BUILD_NUMBER rlmuthukumar/$IMAGE_NAME:$BUILD_NUMBER'
+          sh 'sudo docker build -t $IMAGE_NAME:$IMAGE_TAG .'
+          sh 'sudo docker tag $IMAGE_NAME:$IMAGE_TAG rlmuthukumar/$IMAGE_NAME:$IMAGE_TAG'
         }
       }
     }
@@ -42,6 +43,15 @@ pipeline {
         }
       }
    }
+
+   stage('Update Image Tag') {
+    steps {
+        sh """
+            cd /home/devops/nodeapp/
+            sed -i 's|rlmuthukumar/nodejs-mysql-ci-cd:.*|rlmuthukumar/nodejs-mysql-ci-cd:${IMAGE_TAG}|' docker-compose.yml
+        """
+          }
+      }
 
     stage('Deploy with Docker Compose') {
             steps {
