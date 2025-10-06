@@ -5,7 +5,6 @@ pipeline {
     	    }
       }
 
-
   environment {
     IMAGE_NAME = "nodejs-mysql-ci-cd"
     DOCKER_REGISTRY = "rlmuthukumar/nodejs-mysql-ci-cd"
