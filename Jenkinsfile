@@ -8,7 +8,7 @@ pipeline {
   environment {
     IMAGE_NAME = "nodejs-mysql-ci-cd"
     DOCKER_REGISTRY = "rlmuthukumar/nodejs-mysql-ci-cd"
-    IMAGE_TAG = "BUILD_NUMBER"
+    IMAGE_TAG = "$BUILD_NUMBER"
   }
 
   stages {
@@ -38,7 +38,7 @@ pipeline {
         withCredentials([usernamePassword(credentialsId: "docker-hub-creds", usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
           sh '''
             echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
-            sudo docker push rlmuthukumar/$IMAGE_NAME:$BUILD_NUMBER
+            sudo docker push rlmuthukumar/$IMAGE_NAME:$IMAGE_TAG
           '''
         }
       }
