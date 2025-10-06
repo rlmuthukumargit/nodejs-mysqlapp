@@ -1,7 +1,7 @@
 # Use official Node.js 22 slim image
 FROM node:22-slim
 
-# Set working directory
+# Set working directory using workdir command
 WORKDIR /app
 
 # Install npm (and optional build tools if needed)
